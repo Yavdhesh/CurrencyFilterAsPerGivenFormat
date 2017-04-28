@@ -4,6 +4,7 @@
 //below is a javascript code to be used within <script></script> tag only.
 
 //below is the format obtained from the db
+//@,@.@2 these are the three parameters with the first one being currencySeparator, the second one being decimal separator and the third one being roundOff
 
 var inputFormat="##,##,###@,@.@5";
 var array=inputFormat.split('@');
