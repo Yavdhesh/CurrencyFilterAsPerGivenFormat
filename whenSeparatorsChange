@@ -3,38 +3,74 @@
 //for dynamic separators to be used in currency format, so that it can support various formats
 //below is a javascript code to be used within <script></script> tag only.
 
-var f="##,##,###@.@2";
-var array=f.split('@');
-alert(array.length);
-var format="##,##,###";
+//below is the format obtained from the db
+
+var inputFormat="##,##,###@,@ @2";
+var array=inputFormat.split('@');
+
+
+//format, decimalSeparator and round
+var format=array[0];
+var currencySeparator=array[1];
+var decimalSeparator=array[2];
+var roundOff=array[3];
+if(isNaN(roundOff)){
+roundOff=parseInt(2);
+}
+
+//reversing the format to find the positions and gap between first two separators
+//the first separator indice will give us the position of the first separator
+// And gap between the first Separator and second one will give us the uniform distance in the format corresponding to which we will add separators in the number/input 
 var reverseFormat=Array.from(format).reverse().join('');
 var reverseFormatLength=reverseFormat.length;
-//below are various separator
-var firstseparator=null;
-var restSeparator=null;
-var firstSeparatorIndicator=0;
+
 var indicesForVariousSeparators=[];
 
-//below is the number
+for(var i=0;i<reverseFormatLength;i++){
+if(reverseFormat.charAt(i)==currencySeparator){
+   indicesForVariousSeparators.push(i);
+}
+
+}
+
+//below we are getting index to first separator and the uniform gap
+var firstSeparatorPosition=null;
+if(isNaN(indicesForVariousSeparators[0])){
+firstSeparatorPosition=3;
+}else{
+firstSeparatorPosition=parseInt(indicesForVariousSeparators[0]);
+}
+var firstAndSecondSeparatorGap=null;
+if(isNaN(indicesForVariousSeparators[0])){
+firstAndSecondSeparatorGap=3;
+}else{
+ firstAndSecondSeparatorGap=parseInt(indicesForVariousSeparators[1])-parseInt(indicesForVariousSeparators[0])-1;
+}
+
+
+
+
+//below is the userInput
 var numberWithDecimal='123456524578.56345378434';
 var numberdecimalArray=numberWithDecimal.split('.');
 var number=numberdecimalArray[0];
 var decimal=numberdecimalArray[1];
-alert(number);
-alert(decimal);
 
-x=number.toString();
 
-var separatorGap=2;
-var stringToGoIntoTheRegex = "\\B(?=(\\d{"+separatorGap+"})+(?!\\d))";
+
+
+//below is the dynamicRegex
+var stringToGoIntoTheRegex = "\\B(?=(\\d{"+2+"})+(?!\\d))";
+
 var regex = new RegExp(stringToGoIntoTheRegex, "g");
 
-var lastThree = x.substring(x.length-4);
-var otherNumbers = x.substring(0,x.length-4);
+var lastThree = number.substring(firstSeparatorPosition);
+alert();
+var otherNumbers = number.substring(0,number.length-4);
 if(otherNumbers != '')
     lastThree = ',' + lastThree;
     difference=2;
    
 var res = otherNumbers.replace(regex, ",") + lastThree;
+alert(res)
 
-alert(res);
