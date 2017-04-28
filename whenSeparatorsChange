@@ -1,0 +1,40 @@
+
+
+//for dynamic separators to be used in currency format, so that it can support various formats
+//below is a javascript code to be used within <script></script> tag only.
+
+var f="##,##,###@.@2";
+var array=f.split('@');
+alert(array.length);
+var format="##,##,###";
+var reverseFormat=Array.from(format).reverse().join('');
+var reverseFormatLength=reverseFormat.length;
+//below are various separator
+var firstseparator=null;
+var restSeparator=null;
+var firstSeparatorIndicator=0;
+var indicesForVariousSeparators=[];
+
+//below is the number
+var numberWithDecimal='123456524578.56345378434';
+var numberdecimalArray=numberWithDecimal.split('.');
+var number=numberdecimalArray[0];
+var decimal=numberdecimalArray[1];
+alert(number);
+alert(decimal);
+
+x=number.toString();
+
+var separatorGap=2;
+var stringToGoIntoTheRegex = "\\B(?=(\\d{"+separatorGap+"})+(?!\\d))";
+var regex = new RegExp(stringToGoIntoTheRegex, "g");
+
+var lastThree = x.substring(x.length-4);
+var otherNumbers = x.substring(0,x.length-4);
+if(otherNumbers != '')
+    lastThree = ',' + lastThree;
+    difference=2;
+   
+var res = otherNumbers.replace(regex, ",") + lastThree;
+
+alert(res);
