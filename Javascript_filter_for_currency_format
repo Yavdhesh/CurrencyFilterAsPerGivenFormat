@@ -1,0 +1,28 @@
+
+//this is not a javacode
+//if you find any bugs, make me aware of it.
+
+//Below code will change the format of the number as you require.
+
+//the first argument in the replace method is a regex which matches the pattern and the number required
+// this regex will help you achieve you goal: /\B(?=(\d{2})+(?!\d))/g
+
+//the second argument is the separator, you want to add in the digit
+//the second param could be ',',' ','.' or anything
+
+//In the regex, we have a number /\B(?=(\d{2})+(?!\d))/g ie 2 here, which takes the number after which separator has to be addded.
+
+//Both first separator and second separator we get it from format as an input ie format:
+
+var format="##,##,###";
+var reverseFormat=Array.from(format).reverse().join('');
+alert(reverseFormat);
+var x=123456524578;
+x=x.toString();
+var lastThree = x.substring(x.length-3);
+var otherNumbers = x.substring(0,x.length-3);
+if(otherNumbers != '')
+    lastThree = ',' + lastThree;
+var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+
+alert(res);
