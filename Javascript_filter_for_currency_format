@@ -14,6 +14,8 @@
 
 //Both first separator and second separator we get it from format as an input ie format:
 
+/*you can refer to https://datatables.net/forums/discussion/5765/currency-format-for-different-countries-us-german-french*/
+
 var format="##,##,###";
 var reverseFormat=Array.from(format).reverse().join('');
 alert(reverseFormat);
