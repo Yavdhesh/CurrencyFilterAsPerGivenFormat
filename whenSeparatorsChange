@@ -3,9 +3,16 @@
 //for dynamic separators to be used in currency format, so that it can support various formats
 //below is a javascript code to be used within <script></script> tag only.
 
+//below is the userInput
+var numberWithDecimal='123456524578.56345378434';
+var numberdecimalArray=numberWithDecimal.split('.');
+var number=numberdecimalArray[0];
+var decimal=numberdecimalArray[1];
+alert(number);
+
 //below is the format obtained from the db
 
-var inputFormat="##,##,###@,@ @2";
+var inputFormat="##,##,###@,@.@2";
 var array=inputFormat.split('@');
 
 
@@ -47,30 +54,44 @@ firstAndSecondSeparatorGap=3;
  firstAndSecondSeparatorGap=parseInt(indicesForVariousSeparators[1])-parseInt(indicesForVariousSeparators[0])-1;
 }
 
+//Now we have to check if inputNumber is less than firstSeparator
+var unit=1;
+for(var i=0;i<firstSeparatorPosition;i++){
+  unit=unit*10;
+}
 
-
-
-//below is the userInput
-var numberWithDecimal='123456524578.56345378434';
-var numberdecimalArray=numberWithDecimal.split('.');
-var number=numberdecimalArray[0];
-var decimal=numberdecimalArray[1];
-
-
-
-
+if(!isNaN(number)){
+if(number<=unit){
+//return numberWithDecimal=number+'.'+parseInt(decimal).toFixed(roundOff); 
+}else{
 //below is the dynamicRegex
-var stringToGoIntoTheRegex = "\\B(?=(\\d{"+2+"})+(?!\\d))";
+
+
+var stringToGoIntoTheRegex = "\\B(?=(\\d{"+firstAndSecondSeparatorGap+"})+(?!\\d))";
 
 var regex = new RegExp(stringToGoIntoTheRegex, "g");
 
-var lastThree = number.substring(firstSeparatorPosition);
-alert();
-var otherNumbers = number.substring(0,number.length-4);
+var lastThree = number.substring(number.length-firstSeparatorPosition,number.length);
+
+var otherNumbers = number.substring(0,number.length-firstSeparatorPosition);
+
+      
+var res = otherNumbers.replace(regex, ",")+','+ lastThree;
+
+
+alert(res);
+var x=123456524578;
+x=x.toString();
+var lastThree = x.substring(x.length-3);
+var otherNumbers = x.substring(0,x.length-3);
 if(otherNumbers != '')
     lastThree = ',' + lastThree;
-    difference=2;
-   
-var res = otherNumbers.replace(regex, ",") + lastThree;
-alert(res)
+var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
 
+alert(res);
+
+}
+
+}else{
+//return numberWithDecimal;
+}
