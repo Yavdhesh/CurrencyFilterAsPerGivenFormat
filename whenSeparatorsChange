@@ -3,16 +3,9 @@
 //for dynamic separators to be used in currency format, so that it can support various formats
 //below is a javascript code to be used within <script></script> tag only.
 
-//below is the userInput
-var numberWithDecimal='123456524578.56345378434';
-var numberdecimalArray=numberWithDecimal.split('.');
-var number=numberdecimalArray[0];
-var decimal=numberdecimalArray[1];
-alert(number);
-
 //below is the format obtained from the db
 
-var inputFormat="##,##,###@,@.@2";
+var inputFormat="##,##,###@,@.@5";
 var array=inputFormat.split('@');
 
 
@@ -24,6 +17,13 @@ var roundOff=array[3];
 if(isNaN(roundOff)){
 roundOff=parseInt(2);
 }
+
+//below is the userInput
+var numberWithDecimal='123456524578.56345378434';
+numberWithDecimal=parseFloat(numberWithDecimal).toFixed(roundOff);
+var numberdecimalArray=numberWithDecimal.split('.');
+var number=numberdecimalArray[0];
+var decimal=numberdecimalArray[1];
 
 //reversing the format to find the positions and gap between first two separators
 //the first separator indice will give us the position of the first separator
@@ -61,6 +61,7 @@ for(var i=0;i<firstSeparatorPosition;i++){
 }
 
 if(!isNaN(number)){
+
 if(number<=unit){
 //return numberWithDecimal=number+'.'+parseInt(decimal).toFixed(roundOff); 
 }else{
@@ -71,24 +72,16 @@ var stringToGoIntoTheRegex = "\\B(?=(\\d{"+firstAndSecondSeparatorGap+"})+(?!\\d
 
 var regex = new RegExp(stringToGoIntoTheRegex, "g");
 
-var lastThree = number.substring(number.length-firstSeparatorPosition,number.length);
+var secondPart = number.substring(number.length-firstSeparatorPosition,number.length);
 
-var otherNumbers = number.substring(0,number.length-firstSeparatorPosition);
+var firstPart = number.substring(0,number.length-firstSeparatorPosition);
 
       
-var res = otherNumbers.replace(regex, ",")+','+ lastThree;
+var res = firstPart.replace(regex, currencySeparator)+currencySeparator+ secondPart+decimalSeparator+decimal;
 
 
 alert(res);
-var x=123456524578;
-x=x.toString();
-var lastThree = x.substring(x.length-3);
-var otherNumbers = x.substring(0,x.length-3);
-if(otherNumbers != '')
-    lastThree = ',' + lastThree;
-var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
 
-alert(res);
 
 }
 
