@@ -1,4 +1,4 @@
-
+version v1.5
 
 //for dynamic separators to be used in currency format, so that it can support various formats
 //below is a javascript code to be used within <script></script> tag only.
