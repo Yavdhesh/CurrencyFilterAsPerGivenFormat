@@ -1,0 +1,97 @@
+
+
+//filter as function
+
+function formatter(inputFromUser,format,currencySeparator,decimalSeparator,roundOff){
+var formatWeGot=format+'@'+currencySeparator+'@'+decimalSeparator+'@'+roundOff;
+var inputFormat="##,##,###@,@.@3";
+inputFormat=formatWeGot;
+var array=inputFormat.split('@');
+
+
+//format, decimalSeparator and round
+var format=array[0];
+var currencySeparator=array[1];
+var decimalSeparator=array[2];
+var roundOff=array[3];
+if(isNaN(roundOff)){
+roundOff=parseInt(2);
+}
+
+//below is the userInput
+
+var numberWithDecimal='225456564.56345378434';
+numberWithDecimal=inputFromUser;
+numberWithDecimal=parseFloat(numberWithDecimal).toFixed(roundOff);
+var numberdecimalArray=numberWithDecimal.split('.');
+var number=numberdecimalArray[0];
+var decimal=numberdecimalArray[1];
+
+//reversing the format to find the positions and gap between first two separators
+//the first separator indice will give us the position of the first separator
+// And gap between the first Separator and second one will give us the uniform distance in the format corresponding to which we will add separators in the number/input 
+var reverseFormat=Array.from(format).reverse().join('');
+var reverseFormatLength=reverseFormat.length;
+
+var indicesForVariousSeparators=[];
+
+for(var i=0;i<reverseFormatLength;i++){
+if(reverseFormat.charAt(i)==currencySeparator){
+   indicesForVariousSeparators.push(i);
+}
+
+}
+
+//below we are getting index to first separator and the uniform gap
+var firstSeparatorPosition=null;
+if(isNaN(indicesForVariousSeparators[0])){
+firstSeparatorPosition=3;
+}else{
+firstSeparatorPosition=parseInt(indicesForVariousSeparators[0]);
+}
+var firstAndSecondSeparatorGap=null;
+if(isNaN(indicesForVariousSeparators[0])){
+firstAndSecondSeparatorGap=3;
+}else{
+ firstAndSecondSeparatorGap=parseInt(indicesForVariousSeparators[1])-parseInt(indicesForVariousSeparators[0])-1;
+}
+
+//Now we have to check if inputNumber is less than firstSeparator
+var unit=1;
+for(var i=0;i<firstSeparatorPosition;i++){
+  unit=unit*10;
+}
+
+if(!isNaN(number)){
+
+if(number<=unit){
+//return numberWithDecimal=number+'.'+parseInt(decimal).toFixed(roundOff);
+numberWithDecimal=number+'.'+decimal;
+alert(numberWithDecimal);
+}else{
+//below is the dynamicRegex
+
+
+var stringToGoIntoTheRegex = "\\B(?=(\\d{"+firstAndSecondSeparatorGap+"})+(?!\\d))";
+
+var regex = new RegExp(stringToGoIntoTheRegex, "g");
+
+var secondPart = number.substring(number.length-firstSeparatorPosition,number.length);
+
+var firstPart = number.substring(0,number.length-firstSeparatorPosition);
+
+      
+var res = firstPart.replace(regex, currencySeparator)+currencySeparator+ secondPart+decimalSeparator+decimal;
+
+
+alert(res);
+
+
+}
+
+}else{
+//return numberWithDecimal;
+}
+}
+//##,##,###@,@.@3
+formatter('225456564.56345378434','',',','.',5);
