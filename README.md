@@ -10,10 +10,14 @@ For example :
 formatter(inputFromUser,format,currencySeparator,decimalSeparator,roundOff)
 
 where inputFromUser= amount you want to format
-      format="##,##,###@,@.@3"; #you may change the format to "##,###,###@,@.@3";
-      currencySeparator = delimiter that we want to use for the inputProvided (for the current example it is ',' read character between           first @,@)
-      decimalSeparator= character which is to be used as a decimal separator (read second @.@)
-      roundOff=  after decimal delimiter the number of digits that you want to show.
+
+format="##,##,###@,@.@3"; #you may change the format to "##,###,###@,@.@3";
+
+currencySeparator = delimiter that we want to use for the inputProvided (for the current example it is ',' read character between           first @,@)
+
+decimalSeparator= character which is to be used as a decimal separator (read second @.@)
+
+roundOff=  after decimal delimiter the number of digits that you want to show.
       
 A format like "##,##,###@,@.@3" will give us output as 1,00,00,000.000
 A format like "##,###,###@,@.@3" will give us output as 10,000,000.000
